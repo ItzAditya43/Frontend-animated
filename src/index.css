@@ -1,0 +1,301 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/**
+ * TRANSPARENCY & CHECKERBOARD FIX
+ * 
+ * If you see checkerboard squares, check in this order:
+ * 1. Verify the PNG images themselves - open in browser/viewer to check if squares are baked into pixels
+ * 2. If images are correct, the CSS fixes below should prevent artifacts
+ * 3. Use remove.bg or similar tool to ensure true transparency
+ */
+
+@layer base {
+  body {
+    @apply text-gray-900;
+    font-family: 'Syncopate', sans-serif;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    background: linear-gradient(135deg, #e8e8e8 0%, #f5f5f5 50%, #e8e8e8 100%) !important;
+    background-color: #e8e8e8 !important;
+  }
+  
+  html {
+    scroll-behavior: smooth;
+    background: #e8e8e8 !important;
+    background-color: #e8e8e8 !important;
+  }
+
+  * {
+    @apply selection:bg-gray-800 selection:text-white;
+  }
+}
+
+@layer utilities {
+  .text-shadow {
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+
+  .text-shadow-lg {
+    text-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  }
+
+  .text-shadow-xl {
+    text-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
+  }
+
+  /* Car image with animated grey background (BMW style) */
+  .car-image,
+  img[src*="side.png"],
+  img[src*="front.png"],
+  img[src*="back.png"] {
+    background: linear-gradient(135deg, #e0e0e0 0%, #f0f0f0 100%) !important;
+    background-color: #e8e8e8 !important;
+    background-image: none !important;
+    display: block !important;
+    will-change: transform, filter;
+    backface-visibility: hidden;
+    transform: translateZ(0);
+    -webkit-backface-visibility: hidden;
+    image-rendering: auto !important;
+    mix-blend-mode: normal !important;
+    position: relative;
+    z-index: 1;
+    filter: contrast(1.05) brightness(0.98);
+    transition: filter 0.3s ease;
+  }
+  
+  /* Car wrapper with animated grey gradient background */
+  .car-wrapper {
+    background: linear-gradient(135deg, #e0e0e0 0%, #f0f0f0 100%) !important;
+    background-color: #e8e8e8 !important;
+    overflow: hidden;
+    position: relative;
+  }
+  
+  .car-wrapper::before {
+    content: '';
+    position: absolute;
+    inset: -20px;
+    background: linear-gradient(135deg, #d8d8d8 0%, #e8e8e8 50%, #f0f0f0 100%);
+    background-size: 200% 200%;
+    z-index: -1;
+    animation: gradientShift 8s ease infinite;
+  }
+  
+  @keyframes gradientShift {
+    0%, 100% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+  }
+  
+  /* Force grey background on all car image containers */
+  [class*="car"],
+  div:has(img[src*="side.png"]),
+  div:has(img[src*="front.png"]),
+  div:has(img[src*="back.png"]) {
+    background: #e8e8e8 !important;
+    background-color: #e8e8e8 !important;
+  }
+
+  .car-container {
+    background: linear-gradient(135deg, #e0e0e0 0%, #f0f0f0 100%) !important;
+    background-color: #e8e8e8 !important;
+    position: relative;
+  }
+}
+
+/* Ensure car images show grey instead of checkerboard */
+img[src*="side.png"],
+img[src*="front.png"],
+img[src*="back.png"],
+img.car-image {
+  background: #e8e8e8 !important;
+  background-color: #e8e8e8 !important;
+  mix-blend-mode: normal !important;
+}
+
+/* Prevent checkerboard artifacts - use grey background */
+.car-container,
+.car-container * {
+  background: #e8e8e8 !important;
+  background-color: #e8e8e8 !important;
+}
+
+/* Force GPU acceleration for all transformed elements */
+[style*="transform"],
+[style*="scale"],
+[style*="rotate"] {
+  will-change: transform;
+  backface-visibility: hidden;
+  transform: translateZ(0);
+  -webkit-backface-visibility: hidden;
+}
+
+/* BMW-style animated gradient */
+@keyframes gradientMove {
+  0%, 100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
+@keyframes gradientText {
+  0%, 100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
+@keyframes textPulse {
+  0%, 100% {
+    filter: drop-shadow(0 0 20px rgba(0, 212, 255, 0.5)) drop-shadow(0 0 40px rgba(0, 153, 255, 0.3));
+    transform: scale(1);
+  }
+  50% {
+    filter: drop-shadow(0 0 30px rgba(0, 212, 255, 0.8)) drop-shadow(0 0 60px rgba(0, 153, 255, 0.5)) drop-shadow(0 0 80px rgba(100, 50, 255, 0.3));
+    transform: scale(1.02);
+  }
+}
+
+@keyframes pulseGlow {
+  0%, 100% {
+    opacity: 0.3;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.6;
+    transform: scale(1.1);
+  }
+}
+
+@keyframes colorShift {
+  0%, 100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
+@keyframes borderGlow {
+  0%, 100% {
+    borderImageSource: linear-gradient(90deg, #00d4ff, #0099ff, #0066ff, #00d4ff);
+    box-shadow: 0 0 10px rgba(0, 212, 255, 0.3);
+  }
+  50% {
+    borderImageSource: linear-gradient(90deg, #00ffff, #0066ff, #9900ff, #00ffff);
+    box-shadow: 0 0 20px rgba(0, 212, 255, 0.6), 0 0 30px rgba(153, 50, 255, 0.4);
+  }
+}
+
+@keyframes flashOverlay {
+  0%, 100% {
+    opacity: 0.2;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+/* Animated gradient overlay for BMW-style color transitions */
+.animated-gradient {
+  background: linear-gradient(90deg, transparent 0%, rgba(0, 150, 255, 0.1) 25%, rgba(0, 200, 255, 0.15) 50%, rgba(0, 150, 255, 0.1) 75%, transparent 100%);
+  background-size: 200% 100%;
+  animation: gradientMove 8s ease infinite;
+}
+
+/* Flashy animated gradient text */
+.animated-gradient-text {
+  background: linear-gradient(90deg, #00d4ff, #0099ff, #0066ff, #9900ff, #00d4ff);
+  background-size: 200% 100%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: gradientText 3s ease infinite, textPulse 2s ease-in-out infinite;
+}
+
+/* Glowing text effect */
+.glowing-text {
+  filter: drop-shadow(0 0 20px rgba(0, 212, 255, 0.5)) drop-shadow(0 0 40px rgba(0, 153, 255, 0.3));
+}
+
+/* Animated badge */
+.animated-gradient-badge {
+  background-size: 200% 100%;
+  animation: gradientMove 3s ease infinite;
+}
+
+/* Flashy animated buttons */
+.animated-button-primary {
+  position: relative;
+}
+
+.animated-button-primary::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+  transform: translateX(-100%);
+  animation: shimmer 2s infinite;
+}
+
+@keyframes shimmer {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+.animated-button-secondary {
+  position: relative;
+}
+
+/* Diagonal line animations for Hero section */
+@keyframes diagonalLineMove {
+  0% {
+    transform: rotate(45deg) translate(-200px, -200px);
+    opacity: 0.3;
+  }
+  50% {
+    transform: rotate(45deg) translate(0px, 0px);
+    opacity: 1;
+  }
+  100% {
+    transform: rotate(45deg) translate(200px, 200px);
+    opacity: 0.3;
+  }
+}
+
+@keyframes diagonalLineMoveReverse {
+  0% {
+    transform: rotate(-45deg) translate(200px, -200px);
+    opacity: 0.3;
+  }
+  50% {
+    transform: rotate(-45deg) translate(0px, 0px);
+    opacity: 1;
+  }
+  100% {
+    transform: rotate(-45deg) translate(-200px, 200px);
+    opacity: 0.3;
+  }
+}
+
+/* Diagonal lines styling */
+.diagonal-line {
+  will-change: transform, opacity;
+  backface-visibility: hidden;
+  border-radius: "4px";
+}

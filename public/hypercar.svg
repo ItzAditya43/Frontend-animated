@@ -1,0 +1,28 @@
+<svg width="800" height="400" viewBox="0 0 800 400" xmlns="http://www.w3.org/2000/svg">
+  <!-- Placeholder hypercar silhouette - Replace with actual PNG image -->
+  <defs>
+    <linearGradient id="carGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#1a1a1a;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#2d2d2d;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Car body -->
+  <path d="M 100 250 Q 150 200 250 180 L 500 180 Q 600 190 650 200 L 700 250 Q 710 280 700 320 L 650 350 L 450 350 L 400 320 L 350 320 L 300 350 L 150 350 L 100 320 Q 90 280 100 250 Z" 
+        fill="url(#carGradient)" stroke="#000" stroke-width="2"/>
+  
+  <!-- Windshield -->
+  <path d="M 300 200 L 450 200 Q 480 210 500 220 L 500 280 L 350 280 Z" 
+        fill="#4a90e2" opacity="0.6"/>
+  
+  <!-- Wheels -->
+  <circle cx="250" cy="350" r="50" fill="#0a0a0a"/>
+  <circle cx="250" cy="350" r="35" fill="#1a1a1a"/>
+  <circle cx="550" cy="350" r="50" fill="#0a0a0a"/>
+  <circle cx="550" cy="350" r="35" fill="#1a1a1a"/>
+  
+  <!-- Text -->
+  <text x="400" y="100" font-family="Arial" font-size="24" fill="#666" text-anchor="middle">
+    Placeholder - Replace with hypercar PNG
+  </text>
+</svg>
