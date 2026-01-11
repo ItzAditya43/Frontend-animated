@@ -36,88 +36,83 @@ A premium, scroll-animated landing page for a hypercar brand built with React (V
    npm run build
    ```
 
+"""
+# F30 Showcase — BMW 3 Series (F30)
+
+This is a polished showcase landing page for the BMW F30 (3 Series) built with React + Vite, styled with Tailwind CSS, and animated with GSAP ScrollTrigger. It uses a horizontal, scroll-pinned flow to present the car, performance specs, and a final "know more" reveal.
+
+## Quick Overview
+
+- Single-page horizontal/pinned scroll layout driven by GSAP ScrollTrigger and container animation.
+- Key visual assets: `front.png` (main hero) and `back.png` (end/reveal). These are expected to live in the `public/` folder and are referenced as `/front.png` and `/back.png` in the code.
+- Components:
+  - `HeroSection.jsx` — pinned hero with parallax & idle float
+  - `PerformanceSpecs.jsx` — front view, compact spec cards, animated counters
+  - `BrandReveal.jsx` — back/ending panel with CTA and expandable details
+
+## Setup
+
+1. Install dependencies:
+
+```bash
+npm install
+```
+
+2. Start the dev server:
+
+```bash
+npm run dev
+```
+
+3. Build for production:
+
+```bash
+npm run build
+```
+
 ## Project Structure
 
 ```
-├── public/
-│   ├── hypercar.svg (placeholder - replace with hypercar.png)
-│   └── hypercar.png (add your image here)
+.
+├── public/                # public assets (place `front.png`, `back.png` here)
 ├── src/
 │   ├── components/
-│   │   ├── HeroSection.jsx      # Pinned hero with car animations
-│   │   ├── PerformanceSpecs.jsx # Specs section with staggered animations
-│   │   └── BrandReveal.jsx      # Brand reveal with car motion
-│   ├── App.jsx                  # Main app component
-│   ├── main.jsx                 # Entry point
-│   └── index.css                # Global styles & Tailwind
+│   │   ├── BrandReveal.jsx
+│   │   ├── HeroSection.jsx
+│   │   └── PerformanceSpecs.jsx
+│   ├── App.jsx
+│   ├── main.jsx
+│   └── index.css
 ├── index.html
 ├── package.json
-├── tailwind.config.js
-└── vite.config.js
+└── tailwind.config.js
 ```
 
-## Animation Details
+## How Animations Work
 
-### Hero Section
-- **Pinned during scroll** (200vh height)
-- Car scales from `1.2` → `0.85`
-- Car rotates on Y-axis from `0deg` → `-10deg`
-- Background text "HYPER AERO" moves with parallax (slower than scroll)
-- Idle float animation (vertical sine wave, independent of scroll)
+- All GSAP logic lives inside `useEffect` hooks and uses `gsap.context()` for scoped cleanup.
+- Scroll-driven transforms and timelines use `ScrollTrigger` with `containerAnimation` (the horizontal scroll container is identified by id `horizontal-scroll` in `App.jsx`).
+- Numeric counters in `PerformanceSpecs.jsx` are animated with GSAP `fromTo` tweens updating `innerText`.
+- Animations use `scrub: 1` for smooth, scrubbed scroll control. Many transitions are driven with `fromTo` and container-aware start/end positions.
 
-### Performance Specs
-- Car shifts left by `-20%` (desktop only)
-- Specs fade in and translate from alternating sides
-- Staggered animation timing
-- On mobile: specs stack below car
+## Assets & Notes
 
-### Brand Reveal
-- Brand text "AERO" scales from `0.5` → `1.0`
-- Car moves to bottom-right corner (`30%` x, `30%` y)
-- Car scales down to `0.4`
+- Place `front.png` and `back.png` in `public/` (referenced as `/front.png` and `/back.png`).
+- There used to be detail images in `src/Images/` (e.g., `1.jpg`, `2.jpg`, `3.jpg`) but those were removed and are no longer referenced.
+- If you modify component layout or add images, ensure file paths match how Vite serves `public/` assets (use `/your-file.png`).
 
-## Tech Stack
+## Troubleshooting
 
-- **React 18** with Vite
-- **GSAP 3.12+** with ScrollTrigger plugin
-- **Tailwind CSS 3.4+**
-- **Bebas Neue** & **Syncopate** fonts (Google Fonts)
+- If animations don't trigger, confirm that `ScrollTrigger.registerPlugin()` is called and that the horizontal container with id `horizontal-scroll` exists in `App.jsx`.
+- If you encounter JSX parse errors after edits, check for unclosed JSX tags or duplicated `useRef` identifiers.
 
-## Customization
+## Development Tips
 
-### Update Specs
-Edit the `specs` array in `src/components/PerformanceSpecs.jsx`:
-
-```javascript
-const specs = [
-  { label: 'Top Speed', value: '340', unit: 'km/h' },
-  { label: '0-100', value: '2.4', unit: 's' },
-  { label: 'Power', value: '1,200', unit: 'hp' },
-]
-```
-
-### Adjust Animation Timings
-All ScrollTrigger configurations use `scrub: 1` for smooth scroll-based animations. You can adjust start/end points in each component's `useEffect` hook.
-
-### Colors & Typography
-Colors are defined in Tailwind classes. Typography uses:
-- **Bebas Neue** for large headings (hero, brand)
-- **Syncopate** for body text and labels
-
-## Browser Support
-
-Modern browsers that support:
-- CSS transforms and 3D transforms
-- GSAP ScrollTrigger
-- ES6+ JavaScript
-
-## Notes
-
-- The page uses pure white background (`#ffffff`)
-- No scroll-jacking - native scroll behavior is preserved
-- All animations use `ease: "none"` for scroll-driven transforms
-- GSAP contexts are properly cleaned up to prevent memory leaks
+- Use browser devtools to inspect `ScrollTrigger` instances: `gsap.utils.toArray(ScrollTrigger.getAll())` can help debug triggers.
+- For draggable interactions consider adding GSAP Draggable if you want inertia and bounds.
 
 ## License
 
 MIT
+
+"""
