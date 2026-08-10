@@ -4,6 +4,9 @@ A single-viewport landing hero for a fictional creative studio, "Foldcraft." Bui
 frontend demo of a video-background hero pattern: autoplaying looping video, a responsive
 navbar with an animated mobile menu, and staggered entrance animations on the hero copy.
 
+**Live demo:** https://itzaditya43.github.io/Frontend-animated/
+(deployed automatically from `main` via the workflow in `.github/workflows/deploy.yml`)
+
 ## Stack
 
 - React 18 + TypeScript
@@ -76,3 +79,10 @@ npm install
 npm run dev      # dev server
 npm run build    # production build to dist/
 ```
+
+## Deployment
+
+Pushing to `main` triggers `.github/workflows/deploy.yml`, which builds the app and publishes
+`dist/` to GitHub Pages. `vite.config.ts` sets `base: '/Frontend-animated/'` to match this
+repo's current name/Pages path — if the repo is renamed, update `base` (and the live-demo URL
+above) to match, or the built asset paths will 404.
