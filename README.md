@@ -63,14 +63,29 @@ navbar's rendered height) and uses `flex flex-col justify-between` to pin the ba
 the top and the paragraph/CTA to the bottom, so the composition holds regardless of exact
 viewport height rather than relying on absolute positioning for each piece.
 
+**Secondary motion.** A handful of small, deliberately restrained touches on top of the entry
+stagger: the video runs an very slow 24s alternating `scale(1 → 1.06)` (`kenBurns`) so the
+background never looks static without reading as an obvious loop; nav links get a `w-0 → w-full`
+underline on hover instead of a color-only state change; the "View the Code" arrow nudges
+`translate-x-1` on hover; and a small `ChevronDown` at the bottom center does a 6px `softBounce`
+to hint the page is a single fixed viewport, not a scroll page. Each of these is a few pixels or
+a few percent of scale — nothing competes with the entry animation for attention.
+
+**Content.** The copy was rewritten to describe what the page actually is (a frontend demo of a
+layered hero pattern) instead of generic creative-agency marketing copy — including a small
+"Demo" tag next to the wordmark and a "View the Code" CTA that links straight to this repo,
+rather than a dead "Explore Work" button with nowhere to go.
+
 ## Known trade-offs
 
 - No fallback poster image or static background if the video fails to load or autoplay is
   blocked by the browser — acceptable for a demo, not for production.
-- No `prefers-reduced-motion` handling on the entrance animations or the video (a production
-  version should pause the video and skip the stagger for users who've opted out of motion).
-- Nav links (`Home`, `Projects`, `Studio`, `Reach Us`) and the CTA buttons are non-functional
-  placeholders (`href="#"`) — there's no routing or destination content behind them.
+- `prefers-reduced-motion: reduce` collapses all animations/transitions to effectively instant
+  (see `index.css`) rather than removing them individually — simpler, but it also kills
+  non-decorative transitions like the mobile menu's open/close, which arguably should stay.
+- The `Overview`, `Details`, and `Stack` nav links are placeholders (`href="#"`) since the page
+  is a single section with no corresponding content yet; `Source` and both CTAs link to this
+  repo.
 
 ## Running locally
 

@@ -1,10 +1,26 @@
 import { useState } from 'react';
-import { ArrowRight, Menu, X } from 'lucide-react';
+import { ArrowRight, ChevronDown, Menu, X } from 'lucide-react';
 
-const NAV_LINKS = ['Home', 'Projects', 'Studio', 'Reach Us'];
+const NAV_LINKS = ['Overview', 'Details', 'Stack', 'Source'];
 
 const VIDEO_URL =
   'https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260622_204221_5339e40b-e73d-4ab0-9c65-79c18c66fd50.mp4';
+
+const REPO_URL = 'https://github.com/ItzAditya43/Frontend-animated';
+
+function NavLink({ label }: { label: string }) {
+  return (
+    <a
+      href={label === 'Source' ? REPO_URL : '#'}
+      target={label === 'Source' ? '_blank' : undefined}
+      rel={label === 'Source' ? 'noreferrer' : undefined}
+      className="group relative text-sm text-white/80 hover:text-white transition-colors"
+    >
+      {label}
+      <span className="absolute -bottom-1 left-0 h-px w-0 bg-white transition-all duration-300 group-hover:w-full" />
+    </a>
+  );
+}
 
 export default function App() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -16,32 +32,37 @@ export default function App() {
         muted
         loop
         playsInline
-        className="absolute h-full w-full object-cover"
+        className="absolute h-full w-full object-cover animate-[kenBurns_24s_ease-in-out_infinite_alternate]"
         style={{ objectPosition: '70% center' }}
         src={VIDEO_URL}
       />
 
       <nav className="relative z-30 flex items-center justify-between px-6 py-5 md:px-12 lg:px-16">
         <div className="flex items-center gap-10">
-          <span className="text-lg font-semibold tracking-tight text-white sm:text-xl">
-            Foldcraft
-          </span>
+          <div className="flex items-center gap-2 group">
+            <span className="h-1.5 w-1.5 rounded-full bg-white animate-pulse" />
+            <span className="text-lg font-semibold tracking-tight text-white sm:text-xl transition-[letter-spacing] duration-300 group-hover:tracking-wide">
+              Foldcraft
+            </span>
+            <span className="rounded-full border border-white/20 px-2 py-0.5 text-[10px] font-medium uppercase tracking-wide text-white/50">
+              Demo
+            </span>
+          </div>
           <div className="hidden md:flex items-center gap-8">
             {NAV_LINKS.map((link) => (
-              <a
-                key={link}
-                href="#"
-                className="text-sm text-white/80 hover:text-white transition-colors"
-              >
-                {link}
-              </a>
+              <NavLink key={link} label={link} />
             ))}
           </div>
         </div>
 
-        <button className="hidden md:block rounded-lg bg-white px-5 py-2 text-sm font-medium text-black hover:scale-105 transition-transform">
-          Let's Talk
-        </button>
+        <a
+          href={REPO_URL}
+          target="_blank"
+          rel="noreferrer"
+          className="hidden md:block rounded-lg bg-white px-5 py-2 text-sm font-medium text-black hover:scale-105 transition-transform"
+        >
+          View Source
+        </a>
 
         <button
           className="relative z-50 flex h-10 w-10 items-center justify-center text-white md:hidden active:scale-90"
@@ -77,7 +98,9 @@ export default function App() {
             {NAV_LINKS.map((link) => (
               <a
                 key={link}
-                href="#"
+                href={link === 'Source' ? REPO_URL : '#'}
+                target={link === 'Source' ? '_blank' : undefined}
+                rel={link === 'Source' ? 'noreferrer' : undefined}
                 className="text-3xl font-medium text-white/90 hover:text-white"
                 onClick={() => setMobileMenuOpen(false)}
               >
@@ -89,7 +112,7 @@ export default function App() {
             className="mt-6 w-fit rounded-full bg-white px-8 py-3.5 text-base font-medium text-black hover:scale-105"
             onClick={() => setMobileMenuOpen(false)}
           >
-            Let's Talk
+            Close
           </button>
         </div>
       </div>
@@ -99,27 +122,37 @@ export default function App() {
           <p
             className="mb-4 sm:mb-6 text-xs sm:text-sm text-white/90 animate-[fadeSlideUp_0.8s_ease_0.2s_both]"
           >
-            Brand & Visual Storytelling
+            React + Tailwind, built as a frontend demo
           </p>
           <h1
             className="text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-medium leading-[1.1] tracking-tight text-white animate-[fadeSlideUp_0.8s_ease_0.4s_both]"
           >
-            Shaping visual
+            Small details,
             <br />
-            narratives,
+            held together
             <br />
-            one pixel at a time.
+            by motion.
           </h1>
         </div>
 
         <div>
           <p className="text-sm sm:text-base md:text-lg leading-relaxed text-white/60 max-w-sm sm:max-w-lg mb-5 sm:mb-6 animate-[fadeSlideUp_0.8s_ease_0.7s_both]">
-            Turning vision into reality through craft, motion, and an endless pursuit of beauty.
+            A hands-on look at a layered video hero, staggered typography, and a menu that opens
+            like it means it — no single element outrunning the rest.
           </p>
-          <button className="rounded-lg bg-white px-5 py-2.5 sm:px-6 sm:py-3 text-sm font-medium text-black hover:scale-105 transition-transform inline-flex items-center gap-2 animate-[fadeSlideUp_0.8s_ease_0.9s_both]">
-            Explore Work
-            <ArrowRight size={16} />
-          </button>
+          <a
+            href={REPO_URL}
+            target="_blank"
+            rel="noreferrer"
+            className="group rounded-lg bg-white px-5 py-2.5 sm:px-6 sm:py-3 text-sm font-medium text-black hover:scale-105 transition-transform inline-flex items-center gap-2 animate-[fadeSlideUp_0.8s_ease_0.9s_both]"
+          >
+            View the Code
+            <ArrowRight size={16} className="transition-transform duration-300 group-hover:translate-x-1" />
+          </a>
+        </div>
+
+        <div className="pointer-events-none absolute inset-x-0 bottom-4 hidden justify-center sm:flex animate-[fadeSlideUp_0.8s_ease_1.2s_both]">
+          <ChevronDown size={18} className="text-white/40 animate-[softBounce_2.2s_ease-in-out_infinite]" />
         </div>
       </div>
     </div>
